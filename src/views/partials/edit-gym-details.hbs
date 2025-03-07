@@ -1,0 +1,34 @@
+<form action="/gym/{{gym._id}}/update" method="POST">
+  <div class="field">
+    <label class="label">Gym Title</label>
+    <input class="input" type="text" name="title" value="{{gym.title}}" required>
+  </div>
+
+  <div class="field">
+    <label class="label">Location</label>
+    <input class="input" type="text" name="location" value="{{gym.location}}" required>
+  </div>
+
+  <div class="field">
+    <label class="label">Capacity</label>
+    <input class="input" type="number" name="capacity" value="{{gym.capacity}}" required>
+  </div>
+
+  <div class="field">
+    <label class="label">Category</label>
+    <div class="control">
+      <div class="select">
+        <select name="category" required>
+          <option value="CrossFit" {{#if (eq gym.category "CrossFit")}}selected{{/if}}>CrossFit</option>
+          <option value="Bodybuilding" {{#if (eq gym.category "Bodybuilding")}}selected{{/if}}>Bodybuilding</option>
+          <option value="Yoga" {{#if (eq gym.category "Yoga")}}selected{{/if}}>Yoga</option>
+          <option value="Cardio" {{#if (eq gym.category "Cardio")}}selected{{/if}}>Cardio</option>
+          <option value="Strongman" {{#if (eq gym.category "Strongman")}}selected{{/if}}>Strongman</option>
+          <option value="Calisthenics" {{#if (eq gym.category "Calisthenics")}}selected{{/if}}>Calisthenics</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <button class="button is-link">Update Gym</button>
+</form>

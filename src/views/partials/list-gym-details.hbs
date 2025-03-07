@@ -1,0 +1,37 @@
+<table class="table is-fullwidth">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Capacity</th>
+      <th>Location</th>
+      <th>Category</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{gym.title}}</td>
+      <td>{{gym.capacity}}</td>
+      <td>{{gym.location}}</td>
+      <td>{{gym.category}}</td>
+      <td>
+        <button class="ui icon button" onclick="loadEditForm('{{gym._id}}')">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div id="edit-gym-form-container"></div>
+
+<script>
+  function loadEditForm(gymId) {
+    fetch(`/gym/${gymId}/edit`)
+      .then(response => response.text()) 
+      .then(html => {
+        document.getElementById('edit-gym-form-container').innerHTML = html;
+      })
+      .catch(error => console.error('Error loading edit form:', error));
+  }
+</script>

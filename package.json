@@ -1,0 +1,35 @@
+{
+  "name": "gymmark",
+  "version": "0.5.0",
+  "description": "A Gym Place of Interest management app",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "lint": "./node_modules/.bin/eslint . --ext .js",
+    "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**.js -exit"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@hapi/cookie": "^12.0.1",
+    "@hapi/hapi": "^21.3.12",
+    "@hapi/inert": "^7.1.0",
+    "@hapi/vision": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "handlebars": "^4.7.8",
+    "joi": "^17.13.3",
+    "lowdb": "^7.0.1",
+    "mongoose": "^8.10.0",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "mocha": "^11.1.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  }
+}

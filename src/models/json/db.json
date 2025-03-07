@@ -1,0 +1,49 @@
+{
+  "users": [
+    {
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "email": "homer@simpson.com",
+      "password": "secret",
+      "_id": "5e6942d0-4df4-4739-a796-ce367befb97a"
+    },
+    {
+      "firstName": "Marge",
+      "lastName": "Simpson",
+      "email": "marge@simpson.com",
+      "password": "secret",
+      "_id": "0f5b2b63-1f4f-4563-b83d-e4da0d0073eb"
+    },
+    {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "email": "bart@simpson.com",
+      "password": "secret",
+      "_id": "66b7daba-a040-42a0-9ab5-bdc6754abb0c"
+    }
+  ],
+  "gyms": [
+    {
+      "title": "Planet Fitness",
+      "location": "New York, NY",
+      "capacity": 200,
+      "category": "General Fitness",
+      "_id": "d78a23dc-3f26-4061-8357-737f71d88609"
+    },
+    {
+      "title": "CrossFit Downtown",
+      "location": "Los Angeles, CA",
+      "capacity": 100,
+      "category": "CrossFit",
+      "_id": "5e45e7c5-4323-47c3-92b4-19c46c74dff9"
+    },
+    {
+      "title": "Yoga Haven",
+      "location": "San Francisco, CA",
+      "capacity": 50,
+      "category": "Yoga",
+      "_id": "92ef1dae-8e9c-4411-b635-cc45b67a25f4"
+    }
+  ],
+  "tracks": []
+}
