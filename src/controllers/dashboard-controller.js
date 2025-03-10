@@ -17,26 +17,40 @@ export const dashboardController = {
   },
 
   addGym: {
-    validate: {
-      payload: GymSpec,
-      options: { abortEarly: false },
-      failAction: function (request, h, error) {
-        return h.view("dashboard-view", { title: "Add Gym error", errors: error.details }).takeover().code(400);
-      },
-    },
-    handler: async function (request, h) {
-      const loggedInUser = request.auth.credentials;
-      const newGym = {
-        userid: loggedInUser._id,
-        title: request.payload.title,
-        location: request.payload.location, 
-        capacity: request.payload.capacity,
-        category: request.payload.category,
-      };
-      await db.gymStore.addGym(newGym);
-      return h.redirect("/dashboard");
+  validate: {
+    payload: GymSpec,
+    options: { abortEarly: false },
+    failAction: function (request, h, error) {
+      return h.view("dashboard-view", { title: "Add Gym error", errors: error.details }).takeover().code(400);
     },
   },
+  handler: async function (request, h) {
+    const loggedInUser = request.auth.credentials;
+    
+    console.log("Received payload:", request.payload); 
+
+    const location = {
+      lat: parseFloat(request.payload.lat),  
+      lng: parseFloat(request.payload.lng),  
+    };
+
+    const newGym = {
+      userid: loggedInUser._id,
+      title: request.payload.title,
+      lat: parseFloat(request.payload.lat),  
+      lng: parseFloat(request.payload.lng),
+      description: request.payload.description,  
+      capacity: request.payload.capacity,
+      category: request.payload.category,
+    };
+
+
+
+    await db.gymStore.addGym(newGym);
+    return h.redirect("/dashboard");
+  },
+},
+
 
   deleteGym: {
     handler: async function (request, h) {

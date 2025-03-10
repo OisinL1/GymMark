@@ -5,6 +5,7 @@
       <th>Capacity</th>
       <th>Location</th>
       <th>Category</th>
+      <th>Description</th>
       <th></th>
     </tr>
   </thead>
@@ -12,8 +13,9 @@
     <tr>
       <td>{{gym.title}}</td>
       <td>{{gym.capacity}}</td>
-      <td>{{gym.location}}</td>
+      <td>{{gym.location.lat}}, {{gym.location.lng}}</td>
       <td>{{gym.category}}</td>
+      <td>{{gym.description}}</td>
       <td>
         <button class="ui icon button" onclick="loadEditForm('{{gym._id}}')">
           <i class="fas fa-edit"></i> Edit
