@@ -3,14 +3,22 @@
     <label class="label">Gym Name</label>
     <input class="input" type="text" placeholder="Enter gym name" name="title" required>
   </div>
+
   <div class="field">
-    <label class="label">Location</label>
-    <input class="input" type="text" placeholder="Enter gym location" name="location" required>
+    <label class="label">Latitude</label>
+    <input class="input" type="number" step="any" placeholder="Enter gym latitude" name="lat" required>
   </div>
+
+  <div class="field">
+    <label class="label">Longitude</label>
+    <input class="input" type="number" step="any" placeholder="Enter gym longitude" name="lng" required>
+  </div>
+
   <div class="field">
     <label class="label">Capacity</label>
     <input class="input" type="number" placeholder="Enter gym capacity" name="capacity" required>
   </div>
+
   <div class="field">
     <label class="label">Category</label>
     <div class="control">
@@ -26,5 +34,12 @@
       </div>
     </div>
   </div>
+
+  <div class="field">
+    <label class="label">Description</label>
+    <textarea class="textarea" name="description" placeholder="Enter gym description"></textarea>
+  </div>
+
   <button class="button is-link">Add Gym</button>
 </form>
+
