@@ -37,4 +37,13 @@ export const userMemStore = {
   async deleteAll() {
     users = [];
   },
+
+  async promoteUserToAdmin(id) {
+    const foundUser = users.find((user) => user._id === id);
+    if (foundUser) {
+      foundUser.isAdmin = true;
+      return foundUser;
+    }
+    return null; 
+  }
 };

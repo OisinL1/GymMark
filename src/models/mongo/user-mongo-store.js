@@ -38,4 +38,15 @@ export const userMongoStore = {
   async deleteAll() {
     await User.deleteMany({});
   },
+
+  async promoteUserToAdmin(userId) {
+    const user = await User.findById(userId);
+    if (user) {
+      user.isAdmin = true;
+      await user.save();
+      return user;
+    }
+    return null;
+  }
+  
 };

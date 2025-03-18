@@ -20,4 +20,8 @@ export const webRoutes = [
   { method: "GET", path: "/gym/{id}", config: gymController.index },
   { method: "GET", path: "/gym/{id}/edit", config: gymController.edit }, 
   { method: "POST", path: "/gym/{id}/update", config: gymController.update },
+
+  { method: "GET", path: "/admin/dashboard", config: accountsController.adminDashboard }, 
+  { method: "GET", path: "/admin/users", config: accountsController.adminUsers },  
+  { method: "GET", path: "/admin/users/promote/{id}", config: accountsController.promoteUserToAdmin },  
 ];
