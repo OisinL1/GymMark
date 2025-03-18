@@ -10,6 +10,9 @@
         <div class="buttons">
           <a id="dashboard" class="button" href="/dashboard"> Dashboard </a> <a id="about" class="button" href="/about"> About </a> <a
           id="logout" class="button" href="/logout"> Logout </a>
+           {{#if user.isAdmin}}
+            <a id="admin-dashboard" class="button" href="/admin/dashboard">Admin Dashboard</a> 
+          {{/if}}
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
 
+
 export const accountsController = {
   index: {
     auth: false,
@@ -69,4 +70,44 @@ export const accountsController = {
     }
     return { isValid: true, credentials: user };
   },
+
+  adminDashboard: {
+  handler: async function (request, h) {
+    const loggedInUser = request.auth.credentials;
+
+    if (!loggedInUser.isAdmin) {
+      return h.response("Unauthorized").code(403);
+    }
+
+    const users = await db.userStore.getAllUsers();
+    return h.view("admin-dashboard", { title: "Admin Dashboard", user: loggedInUser, users });
+  },
+},
+
+ adminUsers: {
+  handler: async function (request, h) {
+    const loggedInUser = request.auth.credentials;
+
+    if (!loggedInUser || !loggedInUser.isAdmin) {
+      return h.response("Unauthorized").code(401);
+    }
+
+    const users = await db.userStore.getAllUsers();
+    return h.view("admin-dashboard", { users });
+  },
+},
+
+  promoteUserToAdmin: {
+  handler: async function (request, h) {
+    const loggedInUser = request.auth.credentials;
+    if (!loggedInUser.isAdmin) {
+      return h.response("Unauthorized").code(401);
+    }
+
+    const userId = request.params.id;
+    await db.userStore.promoteUserToAdmin(userId);  
+
+    return h.redirect("/admin/users");
+  },
+},
 };

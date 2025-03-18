@@ -5,7 +5,7 @@ import { assertSubset } from "./test-utils.js";
 
 suite("User Model tests", () => {
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
     await db.userStore.deleteAll();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -52,5 +52,22 @@ suite("User Model tests", () => {
     await db.userStore.deleteUserById("bad-id");
     const allUsers = await db.userStore.getAllUsers();
     assert.equal(testUsers.length, allUsers.length);
+  });
+
+  test("promote user to admin - success", async () => {
+    const user = await db.userStore.addUser(maggie);
+    assert.isFalse(user.isAdmin); 
+
+    await db.userStore.promoteUserToAdmin(user._id);
+
+    const updatedUser = await db.userStore.getUserById(user._id);
+    assert.isTrue(updatedUser.isAdmin);
+  });
+
+  test("non-admin users remain unchanged", async () => {
+    const nonAdminUsers = await db.userStore.getAllUsers();
+    nonAdminUsers.forEach(user => {
+      assert.isFalse(user.isAdmin); 
+    });
   });
 });
