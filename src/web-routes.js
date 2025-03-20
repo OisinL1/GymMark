@@ -24,4 +24,7 @@ export const webRoutes = [
   { method: "GET", path: "/admin/dashboard", config: accountsController.adminDashboard }, 
   { method: "GET", path: "/admin/users", config: accountsController.adminUsers },  
   { method: "GET", path: "/admin/users/promote/{id}", config: accountsController.promoteUserToAdmin },  
+
+  { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } }
+
 ];
