@@ -1,7 +1,7 @@
 import { assert } from "chai";
-import { db } from "../src/models/db.js";
-import { maggie, testUsers } from "./fixtures.js";
-import { assertSubset } from "./test-utils.js";
+import { db } from "../../src/models/db.js";
+import { maggie, testUsers } from "../fixtures.js";
+import { assertSubset } from "../test-utils.js";
 
 suite("User Model tests", () => {
   setup(async () => {

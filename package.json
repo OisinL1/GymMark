@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js",
-    "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**.js -exit"
+    "test": "mocha --ui tdd test/**/*.js -exit"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
@@ -23,6 +23,7 @@
     "uuid": "^11.0.5"
   },
   "devDependencies": {
+    "axios": "^1.8.4",
     "chai": "^5.1.2",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
