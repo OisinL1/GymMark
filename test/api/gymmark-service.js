@@ -24,4 +24,29 @@ export const gymmarkService = {
     const res = await axios.delete(`${this.gymmarkUrl}/api/users`);
     return res.data;
   },
+
+  async createGym(gym) {
+    const res = await axios.post(`${this.gymmarkUrl}/api/gyms`, gym);
+    return res.data;
+  },
+
+  async deleteAllGyms() {
+    const response = await axios.delete(`${this.gymmarkUrl}/api/gyms`);
+    return response.data;
+  },
+
+  async deleteGym(id) {
+    const response = await axios.delete(`${this.gymmarkUrl}/api/gyms/${id}`);
+    return response;
+  },
+
+  async getAllGyms() {
+    const res = await axios.get(`${this.gymmarkUrl}/api/gyms`);
+    return res.data;
+  },
+
+  async getGym(id) {
+    const res = await axios.get(`${this.gymmarkUrl}/api/gyms/${id}`);
+    return res.data;
+  },
 };
