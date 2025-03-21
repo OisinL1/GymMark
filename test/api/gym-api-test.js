@@ -4,6 +4,9 @@ import { assertSubset } from "../test-utils.js";
 
 import { maggie, goldsGym, testGyms } from "../fixtures.js";
 
+const gyms = new Array(testGyms.length);
+
+
 suite("Gym API tests", () => {
 
   let user = null;

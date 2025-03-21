@@ -2,6 +2,10 @@ import { assert } from "chai";
 import { gymmarkService } from "./gymmark-service.js";
 import { assertSubset } from "../test-utils.js";
 import { maggie, testUsers } from "../fixtures.js";
+import { db } from "../../src/models/db.js";
+
+
+const users = new Array(testUsers.length);
 
 suite("User API tests", () => {
   setup(async () => {

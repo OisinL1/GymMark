@@ -1,6 +1,7 @@
 import Boom from "@hapi/boom";
-import { GymSpec } from "../models/joi-schemas.js";
+import { IdSpec, GymArraySpec, GymSpec, GymSpecPlus } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
+import { validationError } from "./logger.js";
 
 export const gymApi = {
   find: {
@@ -13,6 +14,10 @@ export const gymApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    response: { schema: GymArraySpec, failAction: validationError },
+    description: "Get all gyms",
+    notes: "Returns all gyms",
   },
 
   findOne: {
@@ -28,6 +33,11 @@ export const gymApi = {
         return Boom.serverUnavailable("No Gym with this id");
       }
     },
+    tags: ["api"],
+    description: "Find a Gym",
+    notes: "Returns a gym",
+    validate: { params: { id: IdSpec }, failAction: validationError },
+    response: { schema: GymSpecPlus, failAction: validationError },
   },
 
   create: {
@@ -44,6 +54,11 @@ export const gymApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a Gym",
+    notes: "Returns the newly created gym",
+    validate: { payload: GymSpec, failAction: validationError },
+    response: { schema: GymSpecPlus, failAction: validationError },
   },
 
   deleteOne: {
@@ -60,6 +75,9 @@ export const gymApi = {
         return Boom.serverUnavailable("No Gym with this id");
       }
     },
+    tags: ["api"],
+    description: "Delete a gym",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
 
   deleteAll: {
@@ -72,5 +90,7 @@ export const gymApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all GymApi",
   },
 };
