@@ -1,6 +1,7 @@
+/* eslint-disable prefer-template */
+/* eslint-disable dot-notation */
 import axios from "axios";
-
-import { serviceUrl } from "../fixtures.js";
+import { maggie, serviceUrl } from "../fixtures.js";
 
 export const gymmarkService = {
   gymmarkUrl: serviceUrl,
@@ -16,8 +17,12 @@ export const gymmarkService = {
   },
 
   async getAllUsers() {
-    const res = await axios.get(`${this.gymmarkUrl}/api/users`);
-    return res.data;
+    try {
+      const res = await axios.get(`${this.gymmarkUrl}/api/users`);
+      return res.data;
+    } catch (e) {
+      return null;
+    }
   },
 
   async deleteAllUsers() {
@@ -48,5 +53,15 @@ export const gymmarkService = {
   async getGym(id) {
     const res = await axios.get(`${this.gymmarkUrl}/api/gyms/${id}`);
     return res.data;
+  },
+
+  async authenticate(user) {
+    const response = await axios.post(`${this.gymmarkUrl}/api/users/authenticate`, user);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+    return response.data;
+  },
+
+  async clearAuth() {
+    axios.defaults.headers.common["Authorization"] = "";
   },
 };

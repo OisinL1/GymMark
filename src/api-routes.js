@@ -12,4 +12,5 @@ export const apiRoutes = [
   { method: "GET", path: "/api/gyms", config: gymApi.find },
   { method: "GET", path: "/api/gyms/{id}", config: gymApi.findOne },
   { method: "DELETE", path: "/api/gyms/{id}", config: gymApi.deleteOne },
+  { method: "POST", path: "/api/users/authenticate", config: userApi.authenticate },
 ];

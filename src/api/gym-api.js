@@ -5,7 +5,10 @@ import { validationError } from "./logger.js";
 
 export const gymApi = {
   find: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     handler: async function (request, h) {
       try {
         const gyms = await db.gymStore.getAllGyms();
@@ -21,7 +24,10 @@ export const gymApi = {
   },
 
   findOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     async handler(request) {
       try {
         const gym = await db.gymStore.getGymById(request.params.id);
@@ -41,7 +47,10 @@ export const gymApi = {
   },
 
   create: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     handler: async function (request, h) {
       try {
         const gym = request.payload;
@@ -62,7 +71,10 @@ export const gymApi = {
   },
 
   deleteOne: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     handler: async function (request, h) {
       try {
         const gym = await db.gymStore.getGymById(request.params.id);
@@ -81,7 +93,10 @@ export const gymApi = {
   },
 
   deleteAll: {
-    auth: false,
+    auth: {
+      strategy: "jwt",
+    },
+
     handler: async function (request, h) {
       try {
         await db.gymStore.deleteAllGyms();

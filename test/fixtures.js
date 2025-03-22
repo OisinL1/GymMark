@@ -2,7 +2,7 @@ export const serviceUrl = "http://localhost:3000";
 export const maggie = {
   firstName: "Maggie",
   lastName: "Simpson",
-  email: "maggie@simpson.com",
+  email: "maggie4@simpson.com",
   password: "secret",
   isAdmin: false,  
 };

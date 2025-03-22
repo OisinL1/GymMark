@@ -2,6 +2,7 @@ import { aboutController } from "./controllers/about-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { gymController } from "./controllers/gym-controller.js";
+import { userApi } from "./api/user-api.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -25,6 +26,8 @@ export const webRoutes = [
   { method: "GET", path: "/admin/users", config: accountsController.adminUsers },  
   { method: "GET", path: "/admin/users/promote/{id}", config: accountsController.promoteUserToAdmin },  
 
-  { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } }
+  { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
+  
+
 
 ];
