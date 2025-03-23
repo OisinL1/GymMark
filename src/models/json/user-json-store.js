@@ -44,7 +44,7 @@ export const userJsonStore = {
   async promoteUserToAdmin(id) {
     await db.read();
     const foundUser = db.data.users.find((user) => user._id === id);
-    if (!foundUser) return; // Exit if user not found
+    if (!foundUser) return; 
     foundUser.isAdmin = true;
     await db.write();
   }  
