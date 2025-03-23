@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import { assert } from "chai";
 import { gymmarkService } from "./gymmark-service.js";
 import { assertSubset } from "../test-utils.js";
-import { maggie, goldsGym, testGyms } from "../fixtures.js";
+import { maggie, maggieCredentials, goldsGym, testGyms } from "../fixtures.js";
 
 EventEmitter.setMaxListeners(25);
 
@@ -12,11 +12,11 @@ suite("Gym API tests", () => {
   setup(async () => {
     gymmarkService.clearAuth();
     user = gymmarkService.createUser(maggie);
-    await gymmarkService.authenticate(maggie);
+    await gymmarkService.authenticate(maggieCredentials);
     await gymmarkService.deleteAllGyms();
     await gymmarkService.deleteAllUsers();
     user = await gymmarkService.createUser(maggie);
-    await gymmarkService.authenticate(maggie);
+    await gymmarkService.authenticate(maggieCredentials);
     goldsGym.userid = user._id;
   });
 

@@ -1,5 +1,6 @@
 import Boom from "@hapi/boom";
-import { IdSpec, GymArraySpec, GymSpec, GymSpecPlus } from "../models/joi-schemas.js";
+import mongoose from "mongoose"; 
+import { IdSpec, GymArraySpec, GymSpecPlus } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
 import { validationError } from "./logger.js";
 
@@ -47,26 +48,27 @@ export const gymApi = {
   },
 
   create: {
-    auth: {
-      strategy: "jwt",
-    },
+      auth: {
+        strategy: "jwt",
+      },
 
     handler: async function (request, h) {
       try {
+        console.log("Is the issue arising before payload is validated?");
         const gym = request.payload;
+        console.log("Request Body", gym);
         const newGym = await db.gymStore.addGym(gym);
         if (newGym) {
           return h.response(newGym).code(201);
         }
         return Boom.badImplementation("error creating gym");
       } catch (err) {
-        return Boom.serverUnavailable("Database Error");
+        return Boom.badImplementation("error creating gym", err);      
       }
     },
     tags: ["api"],
     description: "Create a Gym",
     notes: "Returns the newly created gym",
-    validate: { payload: GymSpec, failAction: validationError },
     response: { schema: GymSpecPlus, failAction: validationError },
   },
 

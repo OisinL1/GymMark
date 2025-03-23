@@ -7,6 +7,12 @@ export const maggie = {
   isAdmin: false,  
 };
 
+export const maggieCredentials = {
+  email: "maggie4@simpson.com",
+  password: "secret"
+};
+
+
 export const testUsers = [
   {
     firstName: "Homer",

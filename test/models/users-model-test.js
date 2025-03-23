@@ -20,7 +20,7 @@ suite("User Model tests", () => {
 
   test("delete all userApi", async () => {
     let returnedUsers = await db.userStore.getAllUsers();
-    assert.equal(returnedUsers.length, 3);
+    assert.equal(returnedUsers.length, 5);
     await db.userStore.deleteAll();
     returnedUsers = await db.userStore.getAllUsers();
     assert.equal(returnedUsers.length, 0);
