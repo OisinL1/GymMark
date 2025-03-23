@@ -74,39 +74,6 @@ async function init() {
     isCached: false,
   });
 
-async function addAdminUser() {
-  const adminEmail = "admin@example.com";  
-  const adminPassword = "admin123"; 
-  const adminFirstName = "Admin";  
-  const adminLastName = "User";  
-
-  if (!db.userStore) {
-    console.error("User store is not initialized.");
-    return;
-  }
-
-//----------------------------------------------------------------------
- const existingAdmin = await db.userStore.getUserByEmail(adminEmail);
-  if (!existingAdmin) {
-    const adminUser = {
-      firstName: adminFirstName,
-      lastName: adminLastName,
-      email: adminEmail,
-      password: adminPassword,
-      isAdmin: true,  
-    };
-
-    try {
-      await db.userStore.addUser(adminUser);
-      console.log("Admin user added successfully");
-    } catch (error) {
-      console.error("Error adding admin user:", error);
-    }
-  } else {
-    console.log("Admin user already exists");
-  }
-}
-//-------------------------------------------------------
   server.auth.strategy("session", "cookie", {
     cookie: {
       name: process.env.cookie_name,
@@ -129,7 +96,6 @@ async function addAdminUser() {
   server.route(apiRoutes);
   await server.start();
   console.log("Server running on %s", server.info.uri);
-  await addAdminUser();
 }
 
 

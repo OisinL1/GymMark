@@ -5,8 +5,18 @@
   </div>
 
   <div class="field">
-    <label class="label">Location</label>
-    <input class="input" type="text" name="location" value="{{gym.location}}" required>
+    <label class="label">Description</label>
+    <textarea class="textarea" name="description" required>{{gym.description}}</textarea>
+  </div>
+
+  <div class="field">
+    <label class="label">Latitude</label>
+    <input class="input" type="number" step="any" name="lat" value="{{gym.lat}}" required>
+  </div>
+
+  <div class="field">
+    <label class="label">Longitude</label>
+    <input class="input" type="number" step="any" name="lng" value="{{gym.lng}}" required>
   </div>
 
   <div class="field">

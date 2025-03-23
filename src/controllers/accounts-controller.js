@@ -80,6 +80,7 @@ export const accountsController = {
     }
 
     const users = await db.userStore.getAllUsers();
+    console.log("Admin Dashboard Users:", users);
     return h.view("admin-dashboard", { title: "Admin Dashboard", user: loggedInUser, users });
   },
 },
