@@ -29,10 +29,7 @@ export const dashboardController = {
     
     console.log("Received payload:", request.payload); 
 
-    const location = {
-      lat: parseFloat(request.payload.lat),  
-      lng: parseFloat(request.payload.lng),  
-    };
+  
 
     const newGym = {
       userid: loggedInUser._id,
