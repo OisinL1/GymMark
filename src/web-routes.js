@@ -1,3 +1,4 @@
+import os from "os";
 import { aboutController } from "./controllers/about-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
@@ -27,6 +28,15 @@ export const webRoutes = [
   { method: "GET", path: "/admin/users/promote/{id}", config: accountsController.promoteUserToAdmin },  
 
   { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
+
+  {
+    method: "GET",
+    path: "/testlb",
+    handler: function (request, h) {
+       return(`Server: ${  os.hostname()}`);
+    },
+    config: {auth: false}
+  },
   
 
 
