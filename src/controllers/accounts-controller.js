@@ -89,7 +89,7 @@ export const accountsController = {
   handler: async function (request, h) {
     const loggedInUser = request.auth.credentials;
 
-    if (!loggedInUser || !loggedInUser.isAdmin) {
+    if (!loggedInUser.isAdmin) {
       return h.response("Unauthorized").code(401);
     }
 
