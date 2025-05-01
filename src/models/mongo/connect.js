@@ -1,34 +1,37 @@
 import * as dotenv from "dotenv";
 import Mongoose from "mongoose";
-import mongooseSeeder from "mais-mongoose-seeder"; 
+import mongooseSeeder from "mais-mongoose-seeder";
 import { seedData } from "./seed-data.js";
+import { gymStore } from "./gym-mongo-store.js";
+import { userMongoStore } from "./user-mongo-store.js";
 
-export function connectMongo() {
+const seedLib = mongooseSeeder.default;
+
+async function seed() {
+  const seeder = seedLib(Mongoose);
+  const dbData = await seeder.seed(seedData, { dropDatabase: false, dropCollections: true });
+  console.log(dbData);
+}
+
+export function connectMongo(db) {
   dotenv.config();
-
   Mongoose.set("strictQuery", true);
   Mongoose.connect(process.env.db);
+  const mongoDb = Mongoose.connection;
 
-  const db = Mongoose.connection;
+  db.userStore = userMongoStore;
+  db.gymStore = gymStore;
 
-  db.on("error", (err) => {
+  mongoDb.on("error", (err) => {
     console.log(`database connection error: ${err}`);
   });
 
-  db.on("disconnected", () => {
+  mongoDb.on("disconnected", () => {
     console.log("database disconnected");
   });
 
-  async function seed() {
-    const seedInstance = mongooseSeeder(Mongoose);
-    const dbData = await seedInstance.seed(seedData, { dropDatabase: false, dropCollections: true });
-    console.log(dbData);
-  }
-
-  // eslint-disable-next-line func-names
-  db.once("open", function () {
-    console.log(`database connected to ${this.name} on ${this.host}`);
-    seed();
+  mongoDb.once("open", () => {
+    console.log(`database connected to ${mongoDb.name} on ${mongoDb.host}`);
+    // seed(); // Uncomment if seeding is required
   });
-
 }

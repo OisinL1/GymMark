@@ -8,14 +8,18 @@
     "start": "node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js",
     "test": "mocha --ui tdd test/**/*.js -exit",
-    "dev": "nodemon  src/server.js"
+    "dev": "nodemon  src/server.js",
+    "build": "tsc",
+    "dev:tsc": "tsc --watch"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@hapi/boom": "^10.0.1",
     "@hapi/cookie": "^12.0.1",
     "@hapi/hapi": "^21.3.12",
     "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^7.0.3",
+    "A": "^0.0.1",
     "dotenv": "^16.4.7",
     "handlebars": "^4.7.8",
     "hapi-auth-jwt2": "^11.0.0",
@@ -28,6 +32,11 @@
     "uuid": "^11.0.5"
   },
   "devDependencies": {
+    "@types/hapi__cookie": "^12.0.5",
+    "@types/hapi__inert": "^5.2.10",
+    "@types/hapi__vision": "^5.5.8",
+    "@typescript-eslint/eslint-plugin": "^8.27.0",
+    "@typescript-eslint/parser": "^8.27.0",
     "axios": "^1.8.4",
     "chai": "^5.1.2",
     "eslint": "^8.57.1",
@@ -36,6 +45,8 @@
     "eslint-plugin-import": "^2.31.0",
     "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
