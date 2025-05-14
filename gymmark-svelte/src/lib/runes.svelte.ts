@@ -1,2 +1,9 @@
 export const subTitle = $state({ text: "" });
-export const loggedInUser = $state({ email: "" });
+export const loggedInUser = $state({ 
+    email: "",
+    name: "",
+    token: "",
+    _id: "",
+    isAdmin: false
+  });
+  

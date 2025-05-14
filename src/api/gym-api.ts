@@ -1,5 +1,6 @@
 import Boom from "@hapi/boom";
-import mongoose from "mongoose"; 
+import mongoose from "mongoose";
+import { Request, ResponseToolkit } from "@hapi/hapi"; 
 import { IdSpec, GymArraySpec, GymSpecPlus } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
 import { validationError } from "./logger.js";
@@ -10,7 +11,7 @@ export const gymApi = {
       strategy: "jwt",
     },
 
-    handler: async function (request, h) {
+    handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const gyms = await db.gymStore.getAllGyms();
         return gyms;
@@ -29,7 +30,7 @@ export const gymApi = {
       strategy: "jwt",
     },
 
-    async handler(request) {
+    async handler(request: Request) {
       try {
         const gym = await db.gymStore.getGymById(request.params.id);
         if (!gym) {
@@ -48,36 +49,36 @@ export const gymApi = {
   },
 
   create: {
-      auth: {
-        strategy: "jwt",
-      },
-
-    handler: async function (request, h) {
-      try {
-        console.log("Is the issue arising before payload is validated?");
-        const gym = request.payload;
-        console.log("Request Body", gym);
-        const newGym = await db.gymStore.addGym(gym);
-        if (newGym) {
-          return h.response(newGym).code(201);
-        }
-        return Boom.badImplementation("error creating gym");
-      } catch (err) {
-        return Boom.badImplementation("error creating gym", err);      
-      }
+    auth: {
+      strategy: "jwt",
     },
-    tags: ["api"],
-    description: "Create a Gym",
-    notes: "Returns the newly created gym",
-    response: { schema: GymSpecPlus, failAction: validationError },
+
+  handler: async function (request: Request, h: ResponseToolkit) {
+    try {
+      console.log("Is the issue arising before payload is validated?");
+      const gym = request.payload;
+      console.log("Request Body", gym);
+      const newGym = await db.gymStore.addGym(gym);
+      if (newGym) {
+        return h.response(newGym).code(201);
+      }
+      return Boom.badImplementation("error creating gym");
+    } catch (err) {
+      return Boom.badImplementation("error creating gym", err);      
+    }
   },
+  tags: ["api"],
+  description: "Create a Gym",
+  notes: "Returns the newly created gym",
+  response: { schema: GymSpecPlus, failAction: validationError },
+},
 
   deleteOne: {
     auth: {
       strategy: "jwt",
     },
 
-    handler: async function (request, h) {
+    handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const gym = await db.gymStore.getGymById(request.params.id);
         if (!gym) {
@@ -99,7 +100,7 @@ export const gymApi = {
       strategy: "jwt",
     },
 
-    handler: async function (request, h) {
+    handler: async function (request: Request, h: ResponseToolkit) {
       try {
         await db.gymStore.deleteAllGyms();
         return h.response().code(204);

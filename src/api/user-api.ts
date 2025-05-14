@@ -1,39 +1,62 @@
 import Boom from "@hapi/boom";
+import { Request, ResponseToolkit } from "@hapi/hapi";
 import { db } from "../models/db.js";
 import { UserCredentialsSpec, UserSpec, UserSpecPlus, IdSpec, UserArray, JwtAuth } from "../models/joi-schemas.js";
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
+import { userType } from "../types/gymmark-types.js";
 
 export const userApi = {
   authenticate: {
-    auth: false,
-    handler: async function (request, h) {
-      try {
-        const user = await db.userStore.getUserByEmail(request.payload.email);
-        if (!user) {
-          return Boom.unauthorized("User not found");
-        }
-        if (user.password !== request.payload.password) {
-          return Boom.unauthorized("Invalid password");
-        }
-        const token = createToken(user);
-        return h.response({ success: true, token: token }).code(201);
-      } catch (err) {
-        return Boom.serverUnavailable("Database Error");
+  auth: false,
+  handler: async function (request: Request, h: ResponseToolkit) {
+    const payload = request.payload as userType;
+    console.log("→ [AUTH] payload:", payload);
+
+    try {
+      const user = (await db.userStore.getUserByEmail(payload.email)) as userType;
+      console.log("→ [AUTH] user from DB:", user);
+
+      if (user === null) {
+        console.warn("← [AUTH] No such user");
+        return Boom.unauthorized("User not found");
       }
-    },
-    tags: ["api"],
-    description: "Authenticate  a User",
-    notes: "If user has valid email/password, create and return a JWT token",
-    validate: { payload: UserCredentialsSpec, failAction: validationError },
-    response: { schema: JwtAuth, failAction: validationError }
+
+      const passwordsMatch: boolean = payload.password === user.password;
+      console.log(`→ [AUTH] passwords match? ${passwordsMatch}`);
+
+      if (!passwordsMatch) {
+        console.warn("← [AUTH] Password mismatch");
+        return Boom.unauthorized("Invalid password");
+      }
+
+      const token = createToken(user);
+      console.log("→ [AUTH] issuing token");
+
+      return h.response({
+        success: true,
+        name: `${user.firstName} ${user.lastName}`,
+        token,
+        _id: user._id,
+        isAdmin: user.isAdmin
+      }).code(201);
+    } catch (err) {
+      console.error("✖ [AUTH] ERROR:", err);
+      return Boom.serverUnavailable("Database Error");
+    }
   },
+  tags: ["api"],
+  description: "Authenticate a User",
+  notes: "If user has valid email/password, create and return a JWT token",
+  validate: { payload: UserCredentialsSpec, failAction: validationError },
+  response: { schema: JwtAuth, failAction: validationError }
+},
   
   find: {
     auth: {
       strategy: "jwt",
     },
-    handler: async function (request, h) {
+    handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const users = await db.userStore.getAllUsers();
         return users;
@@ -51,7 +74,7 @@ export const userApi = {
     auth: {
       strategy: "jwt",
     },
-    handler: async function (request, h) {
+    handler: async function (request: Request, h: ResponseToolkit) {
       try {
         const user = await db.userStore.getUserById(request.params.id);
         if (!user) {
@@ -71,9 +94,10 @@ export const userApi = {
 
   create: {
     auth: false,
-    handler: async function (request, h) {
+    handler: async function (request: Request, h: ResponseToolkit) {
       try {
-        const user = await db.userStore.addUser(request.payload);
+        const userPayload = request.payload as userType;
+        const user = await db.userStore.addUser(userPayload);
         if (user) {
           return h.response(user).code(201);
         }
@@ -93,7 +117,7 @@ export const userApi = {
     auth: {
       strategy: "jwt",
     },
-    handler: async function (request, h) {
+    handler: async function (request: Request, h: ResponseToolkit) {
       try {
         await db.userStore.deleteAll();
         return h.response().code(204);

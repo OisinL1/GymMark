@@ -15,7 +15,7 @@
         <div class="navbar-end">
           <a class="navbar-item" href="/add"> Add </a>
           <a class="navbar-item" href="/report"> Report </a>
-          <a class="navbar-item" href="/logout"> Logout [{loggedInUser.email}]</a>
+          <a class="navbar-item" href="/logout"> Logout [{loggedInUser.name}]</a>
         </div>
         <div></div>
       </div>

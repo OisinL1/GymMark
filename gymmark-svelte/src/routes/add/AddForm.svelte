@@ -1,7 +1,9 @@
 <script lang="ts">
     import Coordinates from "$lib/ui/Coordinates.svelte";
+    import { loggedInUser } from "$lib/runes.svelte";
+    import { gymmarkService } from "$lib/gymmark-service";
+    import type { Gym } from "$lib/types/gymmark-types";
   
-    // Categories for gyms
     const gymCategories = [
       "CrossFit",
       "Bodybuilding",
@@ -11,55 +13,64 @@
       "Calisthenics"
     ];
   
-    // Gym-related state variables
-    let gymName = $state("");      // Gym name
-    let lat = $state(52.160858);   // Latitude
-    let lng = $state(-7.15242);    // Longitude
-    let capacity = $state(0);      // Gym capacity
-    let selectedCategory = $state("CrossFit");  // Selected gym category
-    let description = $state(""); // Gym description
+   
+    let gymName = $state("");      
+    let lat = $state(52.160858);   
+    let lng = $state(-7.15242);    
+    let capacity = $state(0);      
+    let selectedCategory = $state("CrossFit"); 
+    let description = $state(""); 
+
+    let message = $state("Please Donate");
   
-    // Simulate the add gym function (API integration later)
+    
     async function addGym() {
-      console.log(`Adding gym: ${gymName}`);
-      console.log(`Lat: ${lat}, Lng: ${lng}`);
-      console.log(`Capacity: ${capacity}`);
-      console.log(`Category: ${selectedCategory}`);
-      console.log(`Description: ${description}`);
-  
-      // Placeholder for API call: 
-      // const res = await fetch("/dashboard/addgym", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     title: gymName,
-      //     lat,
-      //     lng,
-      //     capacity,
-      //     category: selectedCategory,
-      //     description
-      //   })
-      // });
-  
-      // Temporary success log for testing
-      console.log("Gym successfully added (simulated response)");
+        console.log("[FORM] addGym() called with:", {
+      title: gymName,
+      lat, lng, capacity, category: selectedCategory, description
+    });
+    if (!gymName || !lat || !lng || !capacity || !selectedCategory || !description) {
+      message = "Please fill in all required fields.";
+      return;
     }
+
+    const gym: Gym = {
+      title: gymName,
+      lat,
+      lng,
+      capacity,
+      category: selectedCategory,
+      description,
+      userid: loggedInUser._id
+    };
+
+    const success = await gymmarkService.addGym(gym, loggedInUser.token);
+   
+    if (!success) {
+      message = "Failed to add gym — please try again.";
+      return;
+    }
+
+    message = `Gym "${gymName}" added successfully!`;
+    
+    gymName = "";
+    lat = 0;
+    lng = 0;
+    capacity = 0;
+    selectedCategory = "CrossFit";
+    description = "";
+  }
   </script>
   
   <div>
-    <!-- Gym Name -->
     <div class="field">
       <label class="label" for="gymName">Gym Name:</label>
       <input bind:value={gymName} class="input" id="gymName" name="gymName" type="text" placeholder="Enter gym name" />
     </div>
-  
-    <!-- Gym Capacity -->
     <div class="field">
       <label class="label" for="capacity">Capacity:</label>
       <input bind:value={capacity} class="input" id="capacity" name="capacity" type="number" placeholder="Enter gym capacity" />
     </div>
-  
-    <!-- Gym Category -->
     <div class="field">
       <label class="label" for="category">Category:</label>
       <div class="select">
@@ -70,19 +81,13 @@
         </select>
       </div>
     </div>
-  
-    <!-- Gym Description -->
     <div class="field">
       <label class="label" for="description">Description:</label>
       <textarea bind:value={description} class="textarea" id="description" name="description" placeholder="Enter gym description"></textarea>
     </div>
-  
-    <!-- Coordinates Component for map -->
     <div>
       <Coordinates bind:lat bind:lng />
     </div>
-  
-    <!-- Submit Button to Add Gym -->
     <div class="field">
       <div class="control">
         <!-- svelte-ignore event_directive_deprecated -->

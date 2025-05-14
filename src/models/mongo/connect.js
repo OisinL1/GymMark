@@ -5,6 +5,7 @@ import * as mongooseSeeder from "mais-mongoose-seeder";
 import { seedData } from "./seed-data.js";
 import { gymStore } from "./gym-mongo-store.js";
 import { userMongoStore } from "./user-mongo-store.js";
+
 const seedLib = mongooseSeeder.default;
 async function seed() {
     const seeder = seedLib(Mongoose);
@@ -24,8 +25,8 @@ export function connectMongo(db) {
     mongoDb.on("disconnected", () => {
         console.log("database disconnected");
     });
-    mongoDb.once("open", function () {
+    mongoDb.once("open", () => {
         console.log(`database connected to ${mongoDb.name} on ${mongoDb.host}`);
-        //seed();
+        // seed();
     });
 }

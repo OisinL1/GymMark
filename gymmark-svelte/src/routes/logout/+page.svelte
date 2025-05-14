@@ -3,5 +3,10 @@
     import { loggedInUser } from "$lib/runes.svelte";
   
     loggedInUser.email = "";
+    loggedInUser.name = "";
+    loggedInUser.token = "";
+    loggedInUser._id = "";
+    loggedInUser.isAdmin = false;
+    localStorage.removeItem("gymmark");
     goto("/");
   </script>

@@ -7,23 +7,38 @@ export const userApi = {
     authenticate: {
         auth: false,
         handler: async function (request, h) {
+            const payload = request.payload;
+            console.log("→ [AUTH] payload:", payload);
             try {
-                const user = await db.userStore.getUserByEmail(request.payload.email);
-                if (!user) {
+                const user = (await db.userStore.getUserByEmail(payload.email));
+                console.log("→ [AUTH] user from DB:", user);
+                if (user === null) {
+                    console.warn("← [AUTH] No such user");
                     return Boom.unauthorized("User not found");
                 }
-                if (user.password !== request.payload.password) {
+                const passwordsMatch = payload.password === user.password;
+                console.log(`→ [AUTH] passwords match? ${passwordsMatch}`);
+                if (!passwordsMatch) {
+                    console.warn("← [AUTH] Password mismatch");
                     return Boom.unauthorized("Invalid password");
                 }
                 const token = createToken(user);
-                return h.response({ success: true, token: token }).code(201);
+                console.log("→ [AUTH] issuing token");
+                return h.response({
+                    success: true,
+                    name: `${user.firstName} ${user.lastName}`,
+                    token,
+                    _id: user._id,
+                    isAdmin: user.isAdmin
+                }).code(201);
             }
             catch (err) {
+                console.error("✖ [AUTH] ERROR:", err);
                 return Boom.serverUnavailable("Database Error");
             }
         },
         tags: ["api"],
-        description: "Authenticate  a User",
+        description: "Authenticate a User",
         notes: "If user has valid email/password, create and return a JWT token",
         validate: { payload: UserCredentialsSpec, failAction: validationError },
         response: { schema: JwtAuth, failAction: validationError }
@@ -72,7 +87,8 @@ export const userApi = {
         auth: false,
         handler: async function (request, h) {
             try {
-                const user = await db.userStore.addUser(request.payload);
+                const userPayload = request.payload;
+                const user = await db.userStore.addUser(userPayload);
                 if (user) {
                     return h.response(user).code(201);
                 }
