@@ -1,3 +1,5 @@
+import type { Gym } from "./types/gymmark-types";
+
 export const subTitle = $state({ text: "" });
 export const loggedInUser = $state({ 
     email: "",
@@ -7,3 +9,4 @@ export const loggedInUser = $state({
     isAdmin: false
   });
   
+  export const currentGyms = $state({ gyms: [] as Gym[] });

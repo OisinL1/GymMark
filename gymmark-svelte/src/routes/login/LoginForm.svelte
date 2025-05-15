@@ -10,24 +10,17 @@
     let message = $state("");
   
     async function login() {
-      console.log(`attempting to log in email: ${email} with password: ${password}`);
-      let session = await gymmarkService.login(email, password);
-      if (session) {
-        loggedInUser.email = email;
-        loggedInUser.name = session.name;
-        loggedInUser.token = session.token;
-        loggedInUser._id = session._id;
-        loggedInUser.isAdmin = session.isAdmin;
-        localStorage.gymmark = JSON.stringify(loggedInUser);
-        console.log(`Session: ${JSON.stringify(session)}`);
-        goto("/add");
-      } else {
-        email = "";
-        password = "";
-        
-        message = "Invalid Credentials";
-      }
+    console.log(`attempting to log in email: ${email} with password: ${password}`);
+    let session = await gymmarkService.login(email, password);
+    if (session) {
+      goto("/add");
+    } else {
+      email = "";
+      password = "";
+      message = "Invalid Credentials";
     }
+  }
+
   </script>
   
   {#if message}

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { currentGyms } from "$lib/runes.svelte";
     let { gyms } = $props();
   </script>
   
@@ -13,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each gyms as gym}
+      {#each currentGyms.gyms as gym}
         <tr>
           <td>{gym.title}</td>
           <td>{gym.category}</td>
@@ -24,3 +25,4 @@
       {/each}
     </tbody>
   </table>
+  

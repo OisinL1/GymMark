@@ -1,12 +1,8 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import { loggedInUser } from "$lib/runes.svelte";
+    import { gymmarkService } from "$lib/gymmark-service";
   
-    loggedInUser.email = "";
-    loggedInUser.name = "";
-    loggedInUser.token = "";
-    loggedInUser._id = "";
-    loggedInUser.isAdmin = false;
-    localStorage.removeItem("gymmark");
+    gymmarkService.clearSession();
     goto("/");
   </script>
+  
