@@ -21,6 +21,8 @@
     "@hapi/vision": "^7.0.3",
     "A": "^0.0.1",
     "dotenv": "^16.4.7",
+    "echarts": "^5.6.0",
+    "frappe-charts": "^1.6.2",
     "handlebars": "^4.7.8",
     "hapi-auth-jwt2": "^11.0.0",
     "hapi-swagger": "^17.3.2",
@@ -29,6 +31,7 @@
     "lowdb": "^7.0.1",
     "mais-mongoose-seeder": "^1.0.7",
     "mongoose": "^8.10.0",
+    "svelte-echarts": "^1.0.0",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
@@ -46,6 +49,7 @@
     "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2",
+    "svelte-frappe-charts": "^1.10.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }

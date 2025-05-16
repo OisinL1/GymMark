@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Session, User, Gym } from "$lib/types/gymmark-types";
 import { loggedInUser, currentGyms } from "./runes.svelte";
+import { computeCapacityByCategory, computeCountByCategory } from "$lib/gymmark-utils";
 
 
 export const gymmarkService = {
@@ -98,6 +99,8 @@ export const gymmarkService = {
   async refreshGymInfo() {
     if (loggedInUser.token) {
     currentGyms.gyms = await this.getGyms(loggedInUser.token);
+    computeCapacityByCategory(currentGyms.gyms);
+    computeCountByCategory(currentGyms.gyms);
     }
   },
 

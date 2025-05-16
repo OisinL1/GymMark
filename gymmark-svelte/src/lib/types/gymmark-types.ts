@@ -24,4 +24,9 @@ export interface Session {
     description?: string;
     userid: string;
   }
+
+  export interface DataSet {
+    labels: string[];
+    datasets: [{ values: number[] }];
+  }
   
