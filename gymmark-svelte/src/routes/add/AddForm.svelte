@@ -20,6 +20,7 @@
     let capacity = $state(0);      
     let selectedCategory = $state("CrossFit"); 
     let description = $state(""); 
+    let { gymEvent = null } = $props();
 
     let message = $state("Please Donate");
   
@@ -31,6 +32,7 @@
     });
     if (!gymName || !lat || !lng || !capacity || !selectedCategory || !description) {
       message = "Please fill in all required fields.";
+
       return;
     }
 
@@ -50,7 +52,7 @@
       message = "Failed to add gym — please try again.";
       return;
     }
-
+    if (gymEvent) gymEvent(gym);
     message = `Gym "${gymName}" added successfully!`;
     
     gymName = "";

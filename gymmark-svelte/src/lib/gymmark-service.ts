@@ -39,6 +39,7 @@ export const gymmarkService = {
     await this.refreshGymInfo();
   },
 
+
   clearSession() {
     currentGyms.gyms = [];
     loggedInUser.email = "";
@@ -103,6 +104,8 @@ export const gymmarkService = {
     computeCountByCategory(currentGyms.gyms);
     }
   },
+
+  
 
  // async saveSession(session: Session, email: string) {
    // loggedInUser.email = email;
