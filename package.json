@@ -4,6 +4,9 @@
   "description": "A Gym Place of Interest management app",
   "main": "src/server.js",
   "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "start": "node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js",
