@@ -6,6 +6,7 @@ const gymSchema = new Schema({
     lng: { type: Number, required: true },
     capacity: { type: Number, min: 1, default: null },
     category: { type: String, required: true },
+    images: [{ type: String }],
     userid: {
         type: Schema.Types.ObjectId,
         ref: "User",

@@ -22,9 +22,7 @@ export const gymApi = {
         notes: "Returns all gyms",
     },
     findOne: {
-        auth: {
-            strategy: "jwt",
-        },
+        auth: false,
         async handler(request) {
             try {
                 const gym = await db.gymStore.getGymById(request.params.id);
@@ -104,4 +102,76 @@ export const gymApi = {
         tags: ["api"],
         description: "Delete all GymApi",
     },
+    uploadImage: {
+        auth: {
+            strategy: "jwt",
+        },
+        handler: async function (request, h) {
+            try {
+                const gym = await db.gymStore.getGymById(request.params.id);
+                if (!gym) {
+                    return Boom.notFound("No gym with this ID");
+                }
+                const { url } = request.payload;
+                if (!url || typeof url !== "string") {
+                    return Boom.badRequest("No image URL provided");
+                }
+                if (!gym.images) {
+                    gym.images = [];
+                }
+                gym.images.push(url);
+                await db.gymStore.updateGym(gym._id, gym);
+                return h.response({ success: true, images: gym.images }).code(200);
+            }
+            catch (err) {
+                console.error(err);
+                return Boom.badImplementation("Image upload failed");
+            }
+        },
+        payload: {
+            parse: true,
+            output: "data",
+            maxBytes: 209715200,
+            multipart: false,
+        },
+        tags: ["api"],
+        description: "Add an image URL to a Gym's images array",
+        notes: "Receives a Cloudinary URL and adds it to the Gym's Images array",
+    },
+    deleteImage: {
+        auth: {
+            strategy: "jwt",
+        },
+        handler: async function (request, h) {
+            try {
+                const gym = await db.gymStore.getGymById(request.params.gymId);
+                if (!gym) {
+                    return Boom.notFound("No gym with this ID");
+                }
+                const { url } = request.payload;
+                if (!url || typeof url !== "string") {
+                    return Boom.badRequest("No image URL provided");
+                }
+                if (!gym.images || !gym.images.includes(url)) {
+                    return Boom.notFound("Image URL not found in gym images");
+                }
+                gym.images = gym.images.filter(imageUrl => imageUrl !== url);
+                await db.gymStore.updateGym(gym._id, gym);
+                return h.response({ success: true, images: gym.images }).code(200);
+            }
+            catch (err) {
+                console.error(err);
+                return Boom.badImplementation("Image deletion failed");
+            }
+        },
+        payload: {
+            parse: true,
+            output: "data",
+            maxBytes: 209715200,
+            multipart: false,
+        },
+        tags: ["api"],
+        description: "Delete an image URL from a Gym's images array",
+        notes: "Removes image URL from the Gym's images array",
+    }
 };

@@ -1,1 +1,6 @@
-<div class="notification is-primary">Hello from GymMark!</div>
+<script lang="ts">
+    import SplashScreen from "$lib/ui/SplashScreen.svelte";
+  </script>
+  
+  <SplashScreen />
+  

@@ -17,6 +17,7 @@ export type userType = {
     lng: number;
     capacity: number | null;
     category: string;
+    images?: string[];
     userid: Types.ObjectId; 
   };
 
