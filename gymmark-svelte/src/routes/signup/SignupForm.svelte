@@ -2,21 +2,33 @@
     import { goto } from "$app/navigation";
     import UserCredentials from "$lib/ui/UserCredentials.svelte";
     import UserDetails from "$lib/ui/UserDetails.svelte";
+    import { gymmarkService } from "$lib/gymmark-service";
   
-    let firstName = $state("");
-    let lastName = $state("");
-    let email = $state("");
-    let password = $state("");
-    let message = $state("");
-  
+    let firstName = "";
+  let lastName = "";
+  let email = "";
+  let password = "";
+  let message = "";
+
     async function signup() {
-      const success = false;
-      if (success) {
-        goto("/donate");
-      } else {
-        message = "Error Trying to sign up";
-      }
-    }
+  console.log(`Attempting to sign up: ${firstName} ${lastName}, ${email}`);
+  
+  let success = await gymmarkService.signup({
+    firstName,
+    lastName,
+    email,
+    password
+  });
+
+  if (success) {
+    goto("/login");
+  } else {
+    message = "Signup failed. Please try again.";
+    email = "";
+    password = "";
+  }
+}
+
   </script>
   
   <div class="box">

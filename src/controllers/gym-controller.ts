@@ -4,7 +4,6 @@ import { db } from "../models/db.js";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { imageStore } from "../models/mongo/image-store.js";
 
-// Define the expected shape of the payload
 type GymPayload = {
   title: string;
   description: string;

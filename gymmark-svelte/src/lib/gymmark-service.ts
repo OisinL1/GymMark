@@ -7,15 +7,16 @@ import { computeCapacityByCategory, computeCountByCategory } from "$lib/gymmark-
 export const gymmarkService = {
   baseUrl: "http://localhost:3000",
 
-  async signup(user: User): Promise<boolean> {
+  async signup(user: User): Promise<User | false> {
     try {
       const response = await axios.post(`${this.baseUrl}/api/users`, user);
-      return response.data.success === true;
+      return response.data;
     } catch (error) {
       console.log(error);
       return false;
     }
   },
+  
 
   saveSession(session: Session, email: string) {
     loggedInUser.email = email;
@@ -97,7 +98,7 @@ export const gymmarkService = {
       return false;
     }
   },
-  
+
   async getGyms(token: string): Promise<Gym[]> {
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -171,17 +172,5 @@ export const gymmarkService = {
       return false;
     }
   }
-
-  
-  
-
- // async saveSession(session: Session, email: string) {
-   // loggedInUser.email = email;
-   // loggedInUser.name = session.name;
-   // loggedInUser.token = session.token;
-    //loggedInUser._id = session._id;
-   // loggedInUser.isAdmin = session.isAdmin;
-   // localStorage.gymmark = JSON.stringify(loggedInUser);
- // }
 
 };
