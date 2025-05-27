@@ -8,12 +8,12 @@
       <div class="container">
         <div class="columns is-vcentered">
           <div class="column is-5">
-            <h1 class="title has-text-centered">Signup to Donation</h1>
+            <h1 class="title has-text-centered">Signup to GymMark</h1>
             <SignupForm />
           </div>
           <div class="column is-6 is-offset-1">
             <figure class="image is-4by3">
-              <img class="object-fit" src="/homer3.png" alt="homer" />
+              <img class="object-fit" src="/gym-photo.png" alt="homer" />
             </figure>
           </div>
         </div>
