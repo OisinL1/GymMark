@@ -86,6 +86,18 @@ export const gymmarkService = {
     }
   },
 
+  async deleteGym(gymId: string, token: string): Promise<boolean> {
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.delete(`${this.baseUrl}/api/gyms/${gymId}`);
+      await this.refreshGymInfo();
+      return response.status === 200;
+    } catch (error) {
+      console.error("Error deleting gym:", error);
+      return false;
+    }
+  },
+  
   async getGyms(token: string): Promise<Gym[]> {
     try {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
@@ -97,6 +109,17 @@ export const gymmarkService = {
     }
   },
 
+  async getGymById(id: string, token: string): Promise<Gym | null> {
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+      const response = await axios.get(`${this.baseUrl}/api/gyms/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching gym by ID:", error);
+      return null;
+    }
+  },
+  
   async refreshGymInfo() {
     if (loggedInUser.token) {
     currentGyms.gyms = await this.getGyms(loggedInUser.token);
@@ -105,6 +128,51 @@ export const gymmarkService = {
     }
   },
 
+  async refreshCurrentGym(gymId: string, token: string): Promise<Gym | null> {
+    try {
+      const gym = await this.getGymById(gymId, token);
+      return gym;
+    } catch (error) {
+      console.error("Failed to refresh current gym:", error);
+      return null;
+    }
+  },
+
+  
+
+  async uploadGymImage(gymId: string, imageUrl: string): Promise<boolean> {
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + loggedInUser.token;
+  
+      const response = await axios.post(
+        `${this.baseUrl}/api/gyms/${gymId}/uploadimage`,
+        { url: imageUrl }
+      );
+  
+      return response.status === 200;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return false;
+    }
+  },
+
+  async deleteGymImage(gymId: string, imageUrl: string): Promise<boolean> {
+    try {
+      axios.defaults.headers.common["Authorization"] = "Bearer " + loggedInUser.token;
+  
+      const response = await axios.delete(
+        `${this.baseUrl}/api/gyms/${gymId}/deleteimage`,
+        { data: { url: imageUrl } }
+      );
+  
+      return response.status === 200;
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      return false;
+    }
+  }
+
+  
   
 
  // async saveSession(session: Session, email: string) {

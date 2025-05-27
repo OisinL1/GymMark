@@ -15,7 +15,7 @@ export interface Session {
   }
 
   export interface Gym {
-    _id?: string;
+    _id: string;
     title: string;
     lat: number;
     lng: number;
@@ -23,6 +23,7 @@ export interface Session {
     category: string;
     description?: string;
     userid: string;
+    images?: string[];
   }
 
   export interface DataSet {

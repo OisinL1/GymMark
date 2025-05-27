@@ -3,8 +3,8 @@
     import { onMount } from "svelte";
     import type { Control, Map as LeafletMap } from "leaflet";
   
-    let { height = 80 } = $props();
-    let id = "home-map-id";
+
+    let { id, height = 80 } = $props();
     let location = { lat: 53.2734, lng: -7.7783203 };
     let zoom = 8;
     let minZoom = 7;
@@ -57,6 +57,8 @@
       L = leaflet.default;
       imap.flyTo({ lat: lat, lng: lng });
     }
+
+    export { imap as leafletInstance };
   </script>
   
   <div {id} class="box" style="height: {height}vh"></div>

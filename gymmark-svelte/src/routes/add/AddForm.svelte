@@ -37,13 +37,13 @@
     }
 
     const gym: Gym = {
-      title: gymName,
-      lat,
-      lng,
-      capacity,
-      category: selectedCategory,
-      description,
-      userid: loggedInUser._id
+        title: gymName,
+        lat,
+        lng,
+        capacity,
+        category: selectedCategory,
+        description,
+        userid: loggedInUser._id,
     };
 
     const success = await gymmarkService.addGym(gym, loggedInUser.token);

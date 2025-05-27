@@ -23,6 +23,7 @@ export const GymSpec = Joi.object()
     lat: Joi.number().optional().example(33.985),
     lng: Joi.number().optional().example(-118.4695),
     capacity: Joi.number().min(1).optional().example(300),
+    images: Joi.array().items(Joi.string().uri()),
     category: Joi.string()
         .valid("CrossFit", "Bodybuilding", "Yoga", "Cardio", "Strongman", "Calisthenics", "General Fitness")
         .required()

@@ -13,4 +13,6 @@ export const apiRoutes = [
   { method: "GET" as const, path: "/api/gyms/{id}", config: gymApi.findOne },
   { method: "DELETE" as const, path: "/api/gyms/{id}", config: gymApi.deleteOne },
   { method: "POST" as const, path: "/api/users/authenticate", config: userApi.authenticate },
+  { method: "POST" as const, path: "/api/gyms/{id}/uploadimage",config: gymApi.uploadImage,},
+  { method: "DELETE" as const, path: "/api/gyms/{gymId}/deleteimage", config: gymApi.deleteImage,},
 ];
